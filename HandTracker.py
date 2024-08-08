@@ -5,8 +5,9 @@ import pyautogui as pag
 import math
 import time
 
-cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW) #changing the "0" to any positive integer will cycle through the cameras you have
 
+#change these as per your wanted resolution
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 3000)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1000)
 
@@ -17,11 +18,14 @@ mpDraw = mp.solutions.drawing_utils
 prevTime = 0
 currTime = 0
 
+#you may change def_x and def_y for the default coordinates of the mouse
 def_x = 1250
 def_y = 750
-threshhold = 10
+threshhold = 10 #You may change this. This is the minimum amount of pixels of movement before the cursor starts moving
 pag.moveTo(def_x,def_y,0.5)
 
+
+#change this as per your default index finger coordinates. This varies from the screen coordinates. Uncomment some of the print statements to understand your finger placement
 x_change = 600
 y_change = 335
 
@@ -57,7 +61,7 @@ while True:
                     length = math.hypot(x_index-x_thumb, y_index-y_thumb)
                     print(length)
 
-                    if length < 160 and length > 100:
+                    if length < 160 and length > 100: #change this as you wish
                         pag.click()
                         pag.sleep(1)
 
@@ -66,6 +70,7 @@ while True:
                     cy_change = cy - y_change
                     #print(cx_change, cy_change)
 
+                    #you can change the multipliers below
                     if abs(cx_change) > threshhold:
                         pag.moveTo(def_x - 1.5*cx_change, def_y + 1.9*cy_change, 0.1)
                     if abs(cy_change) > threshhold:
