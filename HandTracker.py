@@ -35,6 +35,9 @@ y_index = 0
 x_thumb = 0
 y_thumb = 0
 
+x_middle = 0
+y_middle = 0
+
 while True:
     success, img = cap.read()
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -53,15 +56,22 @@ while True:
                 if id == 4:
                     x_thumb, y_thumb = cx, cy
 
-                if id == 8 or id == 4:
+                if id == 12:
+                    x_middle, y_middle = cx, cy
+
+                if id == 8 or id == 4 or id == 12:
                     cv2.circle(img, (cx, cy), 15, (255,0,255), cv2.FILLED)
 
                     cv2.line(img, (x_thumb,y_thumb), (x_index, y_index),(255,0,255), 3)
+                    cv2.line(img, (x_index, y_index), (x_middle, y_middle), (255,0,255), 3)
 
-                    length = math.hypot(x_index-x_thumb, y_index-y_thumb)
-                    print(length)
+                    length_t = math.hypot(x_index-x_thumb, y_index-y_thumb)
+                    print(f'Thumb: {length_t}')
 
-                    if length < 160 and length > 100: #change this as you wish
+                    length_m = math.hypot(x_index-x_middle, y_index-y_middle)
+                    print(f'Middle: {length_m}')
+
+                    if length_t < 160 and length_t > 100: #change this as you wish
                         pag.click()
                         pag.sleep(1)
 
